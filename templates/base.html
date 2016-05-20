@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>{%block titulo%}Bonalto{%endblock titulo%}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="stylesheet" type="text/css" href="{%static 'css/normalize.css'%}">
+	<link rel="stylesheet" type="text/css" href="{%static 'css/skeleton.css'%}">
+
+	{%block head%}{%endblock head%}
+</head>
+<body>
+
+<section class="section">
+<article class="container">
+
+<h1>Fixter</h1>
+
+{% block content %}
+	
+{% endblock content %}
+
+</article>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+{% block scripts %}
+	
+{% endblock scripts %}
+</body>
+</html>
