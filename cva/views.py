@@ -71,8 +71,8 @@ class Indexar(View):
 					# prods+=1
 			messages.success(request,'Producto agregado!')
 			prods+=1
-		except:
-			messages.error(request,'Esta mierda falla')
+		except Exception as e:
+			messages.error(request,'Esta mierda falla {}'.format(e))
 
 		messages.warning(request,'Productos agregados: {} \n Productos repetidos: {}'.format(prods,contador))
 		return redirect('cva:home')
