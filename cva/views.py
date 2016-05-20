@@ -3,6 +3,8 @@ from django.views.generic import View
 from django.core import serializers
 from .models import Producto
 
+from django.contrib import messages
+
 from . import utils
 
 
@@ -22,15 +24,28 @@ class Home(View):
 		# return HttpResponse(data,content_type='application/json')
 		return render(request,template)
 
+	def post(self,request):
+		template="cva/home.html"
+		try:
+			Producto.objects.all().delete()
+			messages.success(request,'Base de datos Borrada')
+		except:
+			messages.error(request,'No se pudo borrar')
+		return render(request,template)
+
+
 class Indexar(View):
 	def get(self,request):
-		template="cva/home.html"
+		# template="cva/home.html"
+		contador = 0
+		prods = 0
 		url = 'https://www.grupocva.com/catalogo_clientes_xml/lista_precios.xml?cliente=24808&marca=%25&grupo=%25&clave=%25&codigo=%25'
 		data = utils.pedido(url)
 		for item in data:
 			try:
 				p = Producto.objects.get(clave=item['clave'],descripcion=item['descripcion'])
 				print('Producto ya existe',p)
+				contador+=1
 
 			except:
 
@@ -51,9 +66,10 @@ class Indexar(View):
 				p.disponibleCD = item['disponibleCD']
 
 				p.save()
+				prods+=1
 
-		return render(request,template)
+		messages.warning(request,'Productos agregados: {} \n Productos repetidos: {}'.format(prods,contador))
+		return redirect('cva:home')
 
-	def post(self,request):
-		Producto.objects.all().delete()
-		return redirect('cva:index')
+
+

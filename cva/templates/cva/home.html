@@ -9,11 +9,42 @@
 
 {% block content %}
 	
-<form action='.' method="post">
+
+<form action='.' method="post" style="width:100%;">
 {%csrf_token%}
 
-<input type="submit" value="Borrar Todo" class="button-primary">
+<div id="botones">
+<input id="borra" type="submit" value="Borrar Todo" class="button-primary">
+<a id="indexa" href="{%url 'cva:index'%}" class="button">Indexar Productos</a>
+</div>
+
+<div id="gif">
+
+<img src="http://www.encuestadorescasen.cl/imgcomun/spin.gif">
+<h5>Indexando, espera. Esto puede tardar varios minutos</h5>
+
+</div>
+
 
 </form>
 
+
+
 {% endblock content %}
+
+
+{% block scripts %}
+	<script>
+		$(document).ready(function(){
+
+			// $('#gif').hide();
+
+			$('#indexa, #borra').on('click',function(){
+				
+				$('#botones').hide();
+				$('#gif').fadeIn();
+
+			});
+		});
+</script>
+{% endblock scripts %}

@@ -10,13 +10,44 @@
 	<link rel="stylesheet" type="text/css" href="{%static 'css/skeleton.css'%}">
 
 	{%block head%}{%endblock head%}
+
+	<style type="text/css">
+		.success{
+			background-color: green;
+			text-align: center;
+		}
+		.error{
+			background-color: red;
+			text-align: center;
+		}
+		.warning{
+			background-color: yellow;
+			text-align: center;
+		}
+		#gif{
+			margin: 0 auto;
+			text-align: center;
+			display: none;
+		}
+		.section{
+			text-align: center;
+		}
+
+	</style>
 </head>
+
 <body>
 
 <section class="section">
+	{% if  messages %}
+	{% for message in messages %}
+		<h5 class="{{message.tags}}">{{message | safe}}</h5>
+	{% endfor %}
+		
+	{% endif %}
 <article class="container">
 
-<h1>Fixter</h1>
+<h3 style="margin:0 auto;">Sistema de automatización de catálogo - <strong>Fixter Versión: 0.1</strong></h3>
 
 {% block content %}
 	
@@ -37,6 +68,7 @@
 
 
 
+<script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
 
 {% block scripts %}
 	
