@@ -45,7 +45,7 @@ class Indexar(View):
 			for item in data:
 				try:
 					p = Producto.objects.get(clave=item['clave'],descripcion=item['descripcion'])
-					print('Producto ya existe',p)
+					messages.info(request,'Producto ya existe {}'.format(p))
 					contador+=1
 
 				except:
@@ -67,6 +67,7 @@ class Indexar(View):
 					p.disponibleCD = item['disponibleCD']
 
 					p.save()
+					messages.success(request,'Producto agregado!')
 					prods+=1
 		except:
 			messages.error(request,'Esta mierda falla')
