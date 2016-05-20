@@ -40,33 +40,36 @@ class Indexar(View):
 		contador = 0
 		prods = 0
 		url = 'https://www.grupocva.com/catalogo_clientes_xml/lista_precios.xml?cliente=24808&marca=%25&grupo=%25&clave=%25&codigo=%25'
-		data = utils.pedido(url)
-		for item in data:
-			try:
-				p = Producto.objects.get(clave=item['clave'],descripcion=item['descripcion'])
-				print('Producto ya existe',p)
-				contador+=1
+		try:
+			data = utils.pedido(url)
+			for item in data:
+				try:
+					p = Producto.objects.get(clave=item['clave'],descripcion=item['descripcion'])
+					print('Producto ya existe',p)
+					contador+=1
 
-			except:
-				pass
-				# p = Producto()
+				except:
+					
+					p = Producto()
 
-				# p.clave = item['clave']
-				# p.codigo_fabricante = item['codigo_fabricante']
-				# p.descripcion = item['descripcion']
-				# p.marca = item['marca']
-				# p.garantia = item['garantia']
-				# p.clase = item['clase']
-				# p.disponible = item['disponible']
-				# p.precio = item['precio']
-				# p.moneda = item['moneda']
-				# p.ficha_tecnica = item['ficha_tecnica']
-				# p.ficha_comercial = item['ficha_comercial']
-				# p.imagen = item['imagen']
-				# p.disponibleCD = item['disponibleCD']
+					p.clave = item['clave']
+					p.codigo_fabricante = item['codigo_fabricante']
+					p.descripcion = item['descripcion']
+					p.marca = item['marca']
+					p.garantia = item['garantia']
+					p.clase = item['clase']
+					p.disponible = item['disponible']
+					p.precio = item['precio']
+					p.moneda = item['moneda']
+					p.ficha_tecnica = item['ficha_tecnica']
+					p.ficha_comercial = item['ficha_comercial']
+					p.imagen = item['imagen']
+					p.disponibleCD = item['disponibleCD']
 
-				# p.save()
-				# prods+=1
+					p.save()
+					prods+=1
+		except:
+			messages.error(request,'Esta mierda falla')
 
 		messages.warning(request,'Productos agregados: {} \n Productos repetidos: {}'.format(prods,contador))
 		return redirect('cva:home')
