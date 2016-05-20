@@ -42,6 +42,10 @@ class Indexar(View):
 		url = 'https://www.grupocva.com/catalogo_clientes_xml/lista_precios.xml?cliente=24808&marca=%25&grupo=%25&clave=%25&codigo=%25'
 		try:
 			data = utils.pedido(url)
+		except:
+			messages.error(request,'no cargó')
+		try:
+			data = utils.pedido(url)
 			for item in data:
 				try:
 					p = Producto.objects.get(clave=item['clave'],descripcion=item['descripcion'])
