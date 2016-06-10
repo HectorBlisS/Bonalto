@@ -39,7 +39,8 @@ class Indexar(View):
 		# template="cva/home.html"
 		contador = 0
 		prods = 0
-		url = 'https://www.grupocva.com/catalogo_clientes_xml/lista_precios.xml?cliente=24808&marca=%25&grupo=%25&clave=%25&codigo=%25'
+		# url = 'https://www.grupocva.com/catalogo_clientes_xml/lista_precios.xml?cliente=24808&marca=%25&grupo=%25&clave=%25&codigo=%25'
+		url = 'https://www.grupocva.com/catalogo_clientes_xml/lista_precios.xml?cliente=24808&marca=%25&grupo=%25&clave=%25&codigo=%25&promos=1&porcentaje=0'
 		try:
 			data = utils.pedido(url)
 			for item in data:
@@ -65,6 +66,16 @@ class Indexar(View):
 					p.ficha_comercial = item['ficha_comercial']
 					p.imagen = item['imagen']
 					p.disponibleCD = item['disponibleCD']
+					p.total_descuento = item['TotalDescuento']
+					p.moneda_descuento = item['MonedaDescuento']
+					p.precio_descuento = item['PrecioDescuento']
+					p.moneda_precio_descuento = item['MonedaPrecioDescuento']
+					p.clave_promocion = item['ClavePromocion']
+					p.descripcion_promocion = item['DescripcionPromocion']
+					p.vencimiento_promocion = item['VencimientoPromocion']
+					p.disponible_en_promocion = item['DisponibleEnPromocion']
+					if item['ClavePromocion'] != 'Sin Descuento':
+						p.en_promo = True
 
 					p.save()
 					# messages.success(request,'Producto agregado!')
